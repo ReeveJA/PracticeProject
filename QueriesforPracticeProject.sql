@@ -1,0 +1,121 @@
+--/****** Script for SelectTopNRows command from SSMS  ******/
+--SELECT TOP (1000) [EmployeeID]
+--      ,[JobTitle]
+--      ,[Salary]
+--  FROM [PracticeProject].[dbo].[EmployeeSalary]
+
+--JOIN ALL TABLES;
+Select *
+From PracticeProject.dbo.EmployeeDemographics As dem
+Join PracticeProject.dbo.EmployeeSalary As sal
+On dem.EmployeeID = sal.EmployeeID
+Join PracticeProject.dbo.EmployeeBenefits As ben
+On sal.JobTitle = ben.JobTitle
+Order By dem.EmployeeID
+
+
+--SELECT COLUMNS FROM DEM, SAL AND BEN;
+Select dem.EmployeeID, Concat(dem.FirstName, LastName) As FullName, dem.Age, dem.Gender, dem.Country, sal.JobTitle, sal.Salary, ben.Benefit
+From PracticeProject.dbo.EmployeeDemographics As dem
+Join PracticeProject.dbo.EmployeeSalary As sal
+On dem.EmployeeID = sal.EmployeeID
+Join PracticeProject.dbo.EmployeeBenefits As ben
+On sal.JobTitle = ben.JobTitle
+Order By dem.EmployeeID
+
+--FIND AVERAGE SALARY PER JOBTITLE;
+Create View AvgSalperJobTitle As
+Select sal.JobTitle, COUNT(sal.JobTitle) As Employees, Avg(sal.Salary) As AverageSalary
+From PracticeProject.dbo.EmployeeDemographics As dem
+Join PracticeProject.dbo.EmployeeSalary As sal
+On dem.EmployeeID = sal.EmployeeID
+Join PracticeProject.dbo.EmployeeBenefits As ben
+On sal.JobTitle = ben.JobTitle
+Group By sal.JobTitle
+--Order By AverageSalary Desc
+
+
+--FIND AVERAGE SALARY PER COUNTRY;
+Create View AvgSalperCountry As
+ Select dem.Country, Avg(sal.Salary) As AverageSalary
+ From PracticeProject.dbo.EmployeeDemographics As dem
+ Join PracticeProject.dbo.EmployeeSalary As sal
+ On dem.EmployeeID = sal.EmployeeID
+ Join PracticeProject.dbo.EmployeeBenefits As ben
+ On sal.JobTitle = ben.JobTitle
+ Group By dem.Country
+--Order By AverageSalary
+
+ --FIND AVERAGE SALARY PER GENDER;
+ Create View AvgSalperGender As
+ Select dem.Gender, Avg(sal.Salary) As AverageSalary
+ From PracticeProject.dbo.EmployeeDemographics As dem
+ Join PracticeProject.dbo.EmployeeSalary As sal
+ On dem.EmployeeID = sal.EmployeeID
+ Join PracticeProject.dbo.EmployeeBenefits As ben
+ On sal.JobTitle = ben.JobTitle
+ Group By dem.Gender
+--Order By AverageSalary
+
+ --FIND AVERAGE SALARY PER JOBTITLE;
+ Select sal.JobTitle, Avg(sal.Salary) As AverageSalary
+ From PracticeProject.dbo.EmployeeDemographics As dem
+ Join PracticeProject.dbo.EmployeeSalary As sal
+ On dem.EmployeeID = sal.EmployeeID
+ Join PracticeProject.dbo.EmployeeBenefits As ben
+ On sal.JobTitle = ben.JobTitle
+ Group By sal.JobTitle
+ Order By AverageSalary
+
+ --ADD 3% PENSION FOR EMPLOYEES BELOW 30;
+ Create View PensionJunior As
+Select dem.EmployeeID, sal.Salary, sal.Salary + (sal.Salary * 0.03) As PensionJunior
+From PracticeProject.dbo.EmployeeDemographics As dem
+Join PracticeProject.dbo.EmployeeSalary As sal
+On dem.EmployeeID = sal.EmployeeID
+Join PracticeProject.dbo.EmployeeBenefits As ben
+On sal.JobTitle = ben.JobTitle
+Where dem.Age < '30'
+
+--ADD 5% PENSION FOR EMPLOYEES ABOVE 30;
+ Create View PensionSenior As
+Select dem.EmployeeID, sal.Salary, sal.Salary + (sal.Salary * 0.03) As PensionSenior
+From PracticeProject.dbo.EmployeeDemographics As dem
+Join PracticeProject.dbo.EmployeeSalary As sal
+On dem.EmployeeID = sal.EmployeeID
+Join PracticeProject.dbo.EmployeeBenefits As ben
+On sal.JobTitle = ben.JobTitle
+Where dem.Age > '30'
+
+--ADD MATERNITY LEAVE FOR WOMEN;
+Create View MatLeaveforWomen As
+Select dem.EmployeeID, dem.Gender,
+Case
+When dem.Gender = 'Female' Then 'MaternityLeave'
+Else 'NA' 
+End As MaternityLeave
+From PracticeProject.dbo.EmployeeDemographics As dem
+Join PracticeProject.dbo.EmployeeSalary As sal
+On dem.EmployeeID = sal.EmployeeID
+Join PracticeProject.dbo.EmployeeBenefits As ben
+On sal.JobTitle = ben.JobTitle
+--Order By dem.EmployeeID
+
+--ADD MEAL ALLOWANCE FOR TRAINEES;
+Create View MealAllowanceforTrainees As
+Select dem.EmployeeID, sal.JobTitle,
+Case
+When sal.JobTitle = 'Trainee' Then 'MealAllowance'
+Else 'NA' 
+End As MealAllowance
+From PracticeProject.dbo.EmployeeDemographics As dem
+Join PracticeProject.dbo.EmployeeSalary As sal
+On dem.EmployeeID = sal.EmployeeID
+Join PracticeProject.dbo.EmployeeBenefits As ben
+On sal.JobTitle = ben.JobTitle
+--Order By dem.EmployeeID
+
+  
+  
+
+
