@@ -1,3 +1,6 @@
+--SQL script--
+
+
 --/****** Script for SelectTopNRows command from SSMS  ******/
 --SELECT TOP (1000) [EmployeeID]
 --      ,[JobTitle]
@@ -115,7 +118,8 @@ Join PracticeProject.dbo.EmployeeBenefits As ben
 On sal.JobTitle = ben.JobTitle
 --Order By dem.EmployeeID
 
-  
-  
+ 
+--Tableau link--
+https://public.tableau.com/app/profile/reeve3412/viz/PracticeProject-EmployeeData/Dashboard1
 
 
