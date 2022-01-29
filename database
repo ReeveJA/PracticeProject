@@ -1,0 +1,47 @@
+--SQL tables--
+
+--Employee Demographics--
+
+EmployeeID	FirstName	LastName	Age	Gender	Country
+1001	John	Martin	28	Male	USA
+1002	Ryan	Smith	26	Male	UK
+1003	Marie	Belle	24	Female	USA
+1004	Alexa	Cowley	23	Female	UK
+1005	Angela	Baxter	27	Female	UK
+1006	Jack	Ryan	31	Male	UK
+1007	Simon	Cranston	34	Male	USA
+1008	Simona	Rose	33	Female	UK
+1009	Juliet	Johnson	28	Female	UK
+1010	Mark	Chimes	29	Male	USA
+1011	Monica	Gartner	30	Female	USA
+1012	Jonathan	Ross	36	Male	USA
+1013	Daniel	Richards	41	Male	USA
+1014	Jarvis	ONeill	25	Male	UK
+1015	Daniella	Bronson	29	Female	UK
+
+--Employee Salary--
+
+EmployeeID	JobTitle	Salary
+1001	Salesman	41000
+1002	Salesman	40800
+1003	Accountant	46000
+1004	Trainee	32000
+1005	Accountant	49500
+1006	Manager	56200
+1007	Accountant	53000
+1008	Salesman	42000
+1009	Salesman	41800
+1010	Salesman	43000
+1011	Accountant	51500
+1012	Manager	56000
+1013	Manager	59000
+1014	Trainee	31800
+1015	Manager	57000
+
+--Employee Benefits--
+
+JobTitle	Benefit
+Trainee	NULL
+Salesman	Silver
+Accountant	Bronze
+Manager	Gold
